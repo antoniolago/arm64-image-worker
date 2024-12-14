@@ -1,0 +1,42 @@
+name: Build and Push ARM64 Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Step 2: Clone Alluxio repository
+    - name: Clone Alluxio repository
+      run: git clone https://github.com/Alluxio/alluxio.git
+
+    # Step 3: Navigate to the Docker directory
+    - name: Navigate to Docker directory
+      run: cd alluxio/integrations/docker
+
+    # Step 4: Log in to Harbor registry
+    - name: Log in to Harbor
+      run: echo "${{ secrets.HARBOR_PASSWORD }}" | docker login harbor.lag0.com.br -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
+
+    # Step 5: Build the Docker image for ARM64
+    - name: Build Docker image for ARM64
+      run: |
+        cd alluxio/integrations/docker
+        docker build -t alluxio/alluxio:2.9.5 --platform arm64 .
+
+    # Step 6: Tag the image
+    - name: Tag Docker image
+      run: docker tag alluxio/alluxio:2.9.5 harbor.lag0.com.br/registry/alluxio:2.9.5
+
+    # Step 7: Push the image to Harbor
+    - name: Push Docker image
+      run: docker push harbor.lag0.com.br/registry/alluxio:2.9.5
