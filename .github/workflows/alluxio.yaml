@@ -17,11 +17,11 @@ jobs:
 
     # Step 2: Clone Alluxio repository
     - name: Clone Alluxio repository
-      run: git clone https://github.com/Alluxio/alluxio.git
+      run: git clone https://github.com/Alluxio/alluxio
 
     # Step 3: Navigate to the Docker directory
     - name: Navigate to Docker directory
-      run: cd alluxio/integrations/docker
+      run: cd ./alluxio/integration/docker
 
     # Step 4: Log in to Harbor registry
     - name: Log in to Harbor
