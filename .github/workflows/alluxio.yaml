@@ -29,7 +29,9 @@ jobs:
 
     # Step 5: Build the Docker image for ARM64
     - name: Build Docker image for ARM64
-      run: docker build -t alluxio/alluxio:2.9.5 --platform arm64 .
+      run: |
+        cd alluxio/integration/docker
+        docker build -t alluxio/alluxio:2.9.5 --platform arm64 .
 
     # Step 6: Tag the image
     - name: Tag Docker image
