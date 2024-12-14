@@ -30,6 +30,7 @@ jobs:
     # Step 5: Build the Docker image for ARM64
     - name: Build Docker image for ARM64
       run: |
+        pwd
         cd alluxio/integration/docker
         docker build -t alluxio/alluxio:2.9.5 --platform arm64 .
 
