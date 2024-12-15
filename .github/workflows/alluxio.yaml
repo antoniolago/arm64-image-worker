@@ -16,7 +16,7 @@ jobs:
           - dockerfile: Dockerfile_deploy
             image: harbor.lag0.com.br/registry/alluxio
             context: ./
-            platform: linux/amd64 #,linux/arm64
+            platform: linux/arm64 #,linux/arm64
 
     env:
       VERSION: 2.9.4  # Define the version as a reusable variable
