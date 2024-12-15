@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: Dockerfile_deploy
+          - dockerfile: Dockerfile
             image: harbor.lag0.com.br/registry/alluxio
             context: ./
             platform: linux/arm64 #,linux/arm64
