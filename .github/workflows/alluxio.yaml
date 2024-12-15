@@ -34,7 +34,7 @@ jobs:
 
     # Step 5: Clone Alluxio repository
     - name: Clone Alluxio repository
-      run: git clone -b release-${{ env.VERSION }} https://github.com/Alluxio/alluxio.git
+      run: git clone -b release-${{ env.VERSION }} https://github.com/Alluxio/alluxio
 
     # Step 6: Build Docker image with repository override
     - name: Build Docker image for ARM64
