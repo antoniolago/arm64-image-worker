@@ -35,7 +35,7 @@ jobs:
 
     # Step 2: Clone Alluxio repository
     - name: Clone Alluxio repository
-      run: git clone -b release-2.9.5 https://github.com/Alluxio/alluxio
+      run: git clone -b release-2.9.4 https://github.com/Alluxio/alluxio
 
     # Step 3: Navigate to the Docker directory
     - name: Navigate to Docker directory
