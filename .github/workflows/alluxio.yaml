@@ -12,6 +12,8 @@ jobs:
 
     env:
       VERSION: 2.9.3  # Define the version as a reusable variable
+      ALLUXIO_BASE_URL: http://downloads.alluxio.io/downloads/files
+      ALLUXIO_TARBALL_URL: "${{ env.ALLUXIO_BASE_URL }}/${{ env.VERSION }}/alluxio-${{ env.VERSION }}-bin.tar.gz"
 
     steps:
     # Step 1: Checkout the repository
@@ -41,6 +43,7 @@ jobs:
       run: |
         cd alluxio/integration/docker
         docker buildx build --platform linux/arm64 \
+          --build-arg ALLUXIO_TARBALL=${{ env.ALLUXIO_TARBALL_URL }} \
           --build-arg YUM_REPO_OVERRIDE="sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-Base.repo && sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Base.repo" \
           -t alluxio/alluxio:${{ env.VERSION }} .
 
