@@ -15,7 +15,7 @@ jobs:
         include:
           - dockerfile: Dockerfile
             image: harbor.lag0.com.br/registry/alluxio
-            context: ./
+            context: ./alluxio/integration/docker
             platform: linux/arm64 #,linux/arm64
 
     env:
