@@ -63,7 +63,7 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=registry,ref=${{ matrix.image }}:cache
-        cache-to: type=registry,ref=${{ matrix.image }}:cache,mode=max
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
         build-args: |
           ALLUXIO_TARBALL=${{ env.ALLUXIO_BASE_URL }}/${{ env.VERSION }}/alluxio-${{ env.VERSION }}-bin.tar.gz
