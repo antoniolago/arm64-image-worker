@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VERSION: 2.9.3  # Define the version as a reusable variable
+      VERSION: 2.9.4  # Define the version as a reusable variable
       ALLUXIO_BASE_URL: http://downloads.alluxio.io/downloads/files
 
     steps:
@@ -37,23 +37,18 @@ jobs:
     - name: Clone Alluxio repository
       run: git clone -b release-${{ env.VERSION }} https://github.com/Alluxio/alluxio
     
+    # Step 6: Modify Dockerfile to use CentOS vault repository
     - name: Modify Dockerfile
       run: |
         cd alluxio/integration/docker
         sed -i '/^FROM centos:7 as build_java8/a RUN sed -i "s|^mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-Base.repo && sed -i "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-Base.repo' Dockerfile
 
     # Step 6: Build Docker image with repository override
-    - name: Build Docker image for ARM64
+    - name: Build and publish Docker image for ARM64
       run: |
         cd alluxio/integration/docker
         docker buildx build --platform linux/arm64 \
           --build-arg ALLUXIO_TARBALL=${{ env.ALLUXIO_BASE_URL }}/${{ env.VERSION }}/alluxio-${{ env.VERSION }}-bin.tar.gz \
-          -t alluxio/alluxio:${{ env.VERSION }} .
-
-    # Step 7: Tag the image
-    - name: Tag Docker image
-      run: docker tag alluxio/alluxio:${{ env.VERSION }} harbor.lag0.com.br/registry/alluxio:${{ env.VERSION }}
-
-    # Step 8: Push the image to Harbor
-    - name: Push Docker image
-      run: docker push harbor.lag0.com.br/registry/alluxio:${{ env.VERSION }}
+          -t antoniolago/alluxio:${{ env.VERSION }} .
+        docker tag antoniolago/alluxio:${{ env.VERSION }} harbor.lag0.com.br/registry/alluxio:${{ env.VERSION }}
+        docker push harbor.lag0.com.br/registry/alluxio:${{ env.VERSION }}
