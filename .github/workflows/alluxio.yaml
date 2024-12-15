@@ -39,7 +39,7 @@ jobs:
     # Step 6: Build Docker image with repository override
     - name: Build Docker image for ARM64
       run: |
-        cd alluxio/integrations/docker
+        cd alluxio/integration/docker
         docker buildx build --platform linux/arm64 \
           --build-arg YUM_REPO_OVERRIDE="sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-Base.repo && sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Base.repo" \
           -t alluxio/alluxio:${{ env.VERSION }} .
