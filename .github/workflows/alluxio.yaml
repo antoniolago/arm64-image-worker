@@ -13,7 +13,6 @@ jobs:
     env:
       VERSION: 2.9.3  # Define the version as a reusable variable
       ALLUXIO_BASE_URL: http://downloads.alluxio.io/downloads/files
-      ALLUXIO_TARBALL_URL: "${{ env.ALLUXIO_BASE_URL }}/${{ env.VERSION }}/alluxio-${{ env.VERSION }}-bin.tar.gz"
 
     steps:
     # Step 1: Checkout the repository
