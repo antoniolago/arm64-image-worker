@@ -34,8 +34,7 @@ jobs:
     
     - name: Modify Dockerfile
       run: |
-        cd alluxio/integration/docker
-        sed -i '/^FROM centos:7 as build_java8/a RUN sed -i "s|^mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-Base.repo && sed -i "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-Base.repo' Dockerfile
+        sed -i '/^FROM centos:7 as build_java8/a RUN sed -i "s|^mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-Base.repo && sed -i "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-Base.repo' alluxio/integration/docker/Dockerfile
     
     - name: Extract metadata (tags, labels) for Docker
       id: meta
@@ -44,7 +43,7 @@ jobs:
         images: ${{ matrix.image }}
         tags: |
           ${{ env.VERSION }}
-          
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
