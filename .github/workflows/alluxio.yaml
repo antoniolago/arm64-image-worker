@@ -39,7 +39,7 @@ jobs:
     
     - name: Modify Dockerfile
       run: |
-        cd alluxio/integrations/docker
+        cd alluxio/integration/docker
         sed -i '/^FROM centos:7 as build_java8/a RUN sed -i "s|^mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-Base.repo && sed -i "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-Base.repo' Dockerfile
 
     # Step 6: Build Docker image with repository override
