@@ -16,7 +16,7 @@ jobs:
           - dockerfile: ./alluxio/integration/docker/Dockerfile
             image: harbor.lag0.com.br/registry/alluxio
             context: ./alluxio/integration/docker
-            platform: linux/arm64 #,linux/arm64
+            platform: linux/arm64
 
     env:
       VERSION: 2.9.4  # Define the version as a reusable variable
@@ -32,10 +32,14 @@ jobs:
     - name: Clone Alluxio repository
       run: git clone -b release-${{ env.VERSION }} https://github.com/Alluxio/alluxio
     
-    - name: Modify Dockerfile
+    - name: Fix deprecated mirrorlist in CentOS 7
       run: |
         sed -i '/^FROM centos:7 as build_java8/a RUN sed -i "s|^mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-Base.repo && sed -i "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-Base.repo' alluxio/integration/docker/Dockerfile
-    
+
+    - name: Update Dockerfile to fetch ARM64 Tini binary
+      run: |
+        sed -i 's|ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static|ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-arm64|g' alluxio/integration/docker/Dockerfile
+
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
